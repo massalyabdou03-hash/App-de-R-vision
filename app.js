@@ -1229,25 +1229,23 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 // ============================
-// SCROLL → MENU ONLY
+// SCROLL MENU ONLY (SAFE)
 // ============================
-let lastScrollTop = 0;
-const menu = document.querySelector('.app-menu');
+(() => {
+  let lastScrollTop = 0;
+  const menu = document.querySelector('.app-menu');
 
-if (menu) {
+  if (!menu) return; // sécurité totale
+
   window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollTop = window.scrollY;
 
-    if (scrollTop > lastScrollTop && scrollTop > 100) {
-      // Scroll vers le bas → cacher le menu
+    if (scrollTop > lastScrollTop && scrollTop > 120) {
       menu.classList.add('hide');
     } else {
-      // Scroll vers le haut → afficher le menu
       menu.classList.remove('hide');
     }
 
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    lastScrollTop = scrollTop;
   });
-}
-  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-});
+})();
