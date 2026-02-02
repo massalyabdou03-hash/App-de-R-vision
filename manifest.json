@@ -2,7 +2,8 @@
   "name": "Zaat Révision - Licence 1 Informatique",
   "short_name": "Zaat Révision",
   "description": "Application de révision pour Licence 1 Informatique - Programme Sénégalais",
-  "start_url": "/",
+  "start_url": "/App-de-R-vision/",
+  "scope": "/App-de-R-vision/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#6366f1",
@@ -23,13 +24,5 @@
   ],
   "categories": ["education", "productivity"],
   "lang": "fr",
-  "dir": "ltr",
-  "scope": "/",
-  "screenshots": [
-    {
-      "src": "screenshots/home.png",
-      "sizes": "1280x720",
-      "type": "image/png"
-    }
-  ]
+  "dir": "ltr"
 }
