@@ -780,7 +780,18 @@ function ouvrirChapitre(matiereId, chapitreIndex) {
   if (chapitre.ressources && chapitre.ressources.length > 0) {
     const ressourcesDiv = document.createElement("div");
     ressourcesDiv.className = "resources-section mt-3";
-    ressourcesDiv.innerHTML = `
+    
+    // Message d'avertissement si hors ligne
+    const isOffline = !navigator.onLine;
+    if (isOffline) {
+      ressourcesDiv.innerHTML = `
+        <div class="offline-warning show">
+          <p>⚠️ Vous êtes hors ligne. Les ressources externes ne sont pas accessibles.</p>
+        </div>
+      `;
+    }
+    
+    ressourcesDiv.innerHTML += `
       <h4>🔗 Ressources complémentaires</h4>
       <p>Pour approfondir tes connaissances :</p>
     `;
@@ -790,6 +801,13 @@ function ouvrirChapitre(matiereId, chapitreIndex) {
       link.href = res.url;
       link.target = "_blank";
       link.className = "resource-link";
+      if (isOffline) {
+        link.classList.add('offline-disabled');
+        link.onclick = (e) => {
+          e.preventDefault();
+          showNetworkNotification('⚠️ Connexion internet requise pour accéder aux ressources externes', 'warning');
+        };
+      }
       link.textContent = res.titre;
       ressourcesDiv.appendChild(link);
     });
@@ -1070,6 +1088,28 @@ function goAbout() {
     </div>
 
     <div class="card">
+      <h3>🌐 Mode Hors Ligne</h3>
+      <p><strong>Ton app fonctionne sans internet !</strong></p>
+      <ul style="line-height: 2; margin-top: 1rem;">
+        <li>✅ Toutes les fonctionnalités principales</li>
+        <li>✅ Navigation et révision complètes</li>
+        <li>✅ Tes données sont sauvegardées localement</li>
+        <li>✅ Notes et progression conservées</li>
+        <li>⚠️ Liens externes désactivés hors ligne</li>
+      </ul>
+      <div style="margin-top: 1rem; padding: 1rem; background: rgba(99, 102, 241, 0.05); border-radius: 8px;">
+        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">Statut actuel :</p>
+        <div id="offline-status-display" style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="status-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></span>
+          <span style="font-weight: 500;">Connexion active</span>
+        </div>
+      </div>
+      <button onclick="testOfflineMode()" style="margin-top: 1rem; background: linear-gradient(135deg, #8b5cf6, #6366f1);">
+        🧪 Tester le mode hors ligne
+      </button>
+    </div>
+
+    <div class="card">
       <h3>👨‍💻 Développeur</h3>
       <p><strong>Créé par Massaly</strong></p>
       <p>Application conçue pour faciliter l'apprentissage et la révision des étudiants en informatique au Sénégal.</p>
@@ -1210,6 +1250,66 @@ async function installerApp() {
 }
 
 // ============================
+// TEST MODE HORS LIGNE
+// ============================
+function testOfflineMode() {
+  const isOnline = navigator.onLine;
+  
+  if (isOnline) {
+    alert(`✅ Mode Hors Ligne - Ce qui fonctionne :
+
+✅ Navigation complète dans l'app
+✅ Lecture de tous les cours
+✅ Cochage des notions maîtrisées
+✅ Prise de notes personnelles
+✅ Consultation des statistiques
+✅ Export/Import des données
+
+❌ Ce qui ne fonctionne pas :
+❌ Liens vers ressources externes
+❌ Polices Google (si premier chargement)
+
+💡 Pour tester vraiment :
+1. Active le mode avion sur ton téléphone
+2. Ou dans Chrome : F12 → Application → Service Workers → Offline
+3. Recharge la page - tout fonctionnera !`);
+  } else {
+    alert(`🔴 Tu es déjà en mode hors ligne !
+
+✅ L'app fonctionne parfaitement !
+- Toutes les fonctionnalités sont actives
+- Tes données sont sauvegardées
+- Navigation fluide
+
+⚠️ Seuls les liens externes sont désactivés.
+
+Pour revenir en ligne : désactive le mode avion.`);
+  }
+  
+  // Mettre à jour l'affichage du statut
+  updateOfflineStatusDisplay();
+}
+
+function updateOfflineStatusDisplay() {
+  const statusDisplay = document.getElementById('offline-status-display');
+  if (!statusDisplay) return;
+  
+  const isOnline = navigator.onLine;
+  
+  if (isOnline) {
+    statusDisplay.innerHTML = `
+      <span class="status-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #10b981;"></span>
+      <span style="font-weight: 500; color: #10b981;">Connexion active</span>
+    `;
+  } else {
+    statusDisplay.innerHTML = `
+      <span class="status-dot" style="width: 12px; height: 12px; border-radius: 50%; background: #ef4444;"></span>
+      <span style="font-weight: 500; color: #ef4444;">Mode hors ligne</span>
+    `;
+  }
+}
+
+// ============================
 // INITIALISATION AU CHARGEMENT
 // ============================
 window.addEventListener('DOMContentLoaded', () => {
@@ -1230,7 +1330,102 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Initialiser la détection de scroll
   initScrollBehavior();
+  
+  // Initialiser la détection du statut réseau
+  initNetworkStatus();
 });
+
+// ============================
+// GESTION DU STATUT RÉSEAU
+// ============================
+function initNetworkStatus() {
+  const statusIndicator = document.getElementById('network-status');
+  const statusText = statusIndicator.querySelector('.status-text');
+  
+  function updateNetworkStatus() {
+    const isOnline = navigator.onLine;
+    
+    if (isOnline) {
+      statusIndicator.classList.remove('offline');
+      statusText.textContent = 'En ligne';
+      console.log('🟢 Mode en ligne');
+      enableExternalLinks();
+    } else {
+      statusIndicator.classList.add('offline');
+      statusText.textContent = 'Hors ligne';
+      console.log('🔴 Mode hors ligne');
+      disableExternalLinks();
+    }
+  }
+  
+  // Vérifier au chargement
+  updateNetworkStatus();
+  
+  // Écouter les changements de connexion
+  window.addEventListener('online', () => {
+    updateNetworkStatus();
+    showNetworkNotification('🟢 Connexion rétablie !', 'success');
+  });
+  
+  window.addEventListener('offline', () => {
+    updateNetworkStatus();
+    showNetworkNotification('🔴 Mode hors ligne - Les liens externes sont désactivés', 'warning');
+  });
+}
+
+// ============================
+// DÉSACTIVER LES LIENS EXTERNES HORS LIGNE
+// ============================
+function disableExternalLinks() {
+  const externalLinks = document.querySelectorAll('.resource-link');
+  
+  externalLinks.forEach(link => {
+    link.classList.add('offline-disabled');
+    link.onclick = (e) => {
+      e.preventDefault();
+      showNetworkNotification('⚠️ Connexion internet requise pour accéder aux ressources externes', 'warning');
+    };
+  });
+}
+
+function enableExternalLinks() {
+  const externalLinks = document.querySelectorAll('.resource-link');
+  
+  externalLinks.forEach(link => {
+    link.classList.remove('offline-disabled');
+    link.onclick = null;
+  });
+}
+
+// ============================
+// NOTIFICATION DE STATUT RÉSEAU
+// ============================
+function showNetworkNotification(message, type = 'info') {
+  // Supprimer les notifications existantes
+  const existing = document.querySelector('.network-notification');
+  if (existing) {
+    existing.remove();
+  }
+  
+  // Créer la notification
+  const notification = document.createElement('div');
+  notification.className = `network-notification ${type}`;
+  notification.innerHTML = `
+    <span>${message}</span>
+    <button onclick="this.parentElement.remove()">✕</button>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Animation d'entrée
+  setTimeout(() => notification.classList.add('show'), 10);
+  
+  // Auto-suppression après 5 secondes
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 300);
+  }, 5000);
+}
 
 // ============================
 // GESTION DU SCROLL (HIDE MENU & SHRINK HEADER)
