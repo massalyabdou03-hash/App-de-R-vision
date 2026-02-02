@@ -1228,3 +1228,19 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   }
 });
+let lastScrollTop = 0;
+const header = document.querySelector('.app-header');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (scrollTop > lastScrollTop && scrollTop > 80) {
+    // Scroll vers le bas → cacher
+    header.classList.add('hide');
+  } else {
+    // Scroll vers le haut → montrer
+    header.classList.remove('hide');
+  }
+
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
