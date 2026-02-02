@@ -1227,25 +1227,17 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log('❌ Erreur Service Worker:', error);
       });
   }
+let lastScrollTop = 0;
+const header = document.querySelector('.app-header');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (scrollTop > lastScrollTop && scrollTop > 80) {
+    header.classList.add('hide');
+  } else {
+    header.classList.remove('hide');
+  }
+
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
-// ============================
-// SCROLL MENU ONLY (SAFE)
-// ============================
-(() => {
-  let lastScrollTop = 0;
-  const menu = document.querySelector('.app-menu');
-
-  if (!menu) return; // sécurité totale
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-
-    if (scrollTop > lastScrollTop && scrollTop > 120) {
-      menu.classList.add('hide');
-    } else {
-      menu.classList.remove('hide');
-    }
-
-    lastScrollTop = scrollTop;
-  });
-})();
