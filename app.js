@@ -1219,7 +1219,7 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Enregistrer le Service Worker pour PWA
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('./service-worker.js')
       .then((registration) => {
         console.log('✅ Service Worker enregistré:', registration);
       })

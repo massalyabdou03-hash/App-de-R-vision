@@ -3,11 +3,11 @@
 
 const CACHE_NAME = 'zaat-revision-v2.0';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/manifest.json',
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
   'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;500;600&display=swap'
 ];
 
@@ -74,8 +74,8 @@ self.addEventListener('fetch', (event) => {
 
           return response;
         }).catch(() => {
-          // En cas d'erreur réseau, retourne une page d'erreur personnalisée si disponible
-          return caches.match('/index.html');
+          // En cas d'erreur réseau, retourne la page d'accueil du cache
+          return caches.match('./index.html');
         });
       })
   );

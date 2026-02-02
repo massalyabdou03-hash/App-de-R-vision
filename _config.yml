@@ -1,0 +1,12 @@
+# Configuration GitHub Pages
+# Ce fichier aide GitHub Pages à mieux servir l'application
+
+# Désactiver Jekyll (on n'utilise pas Jekyll)
+# Cela évite que GitHub essaie de traiter les fichiers
+exclude:
+  - README.md
+  - DEPLOIEMENT.md
+  - AMELIORATIONS.md
+  - SCROLL-FEATURE.md
+  - LICENSE
+  - .gitignore
