@@ -1227,4 +1227,44 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log('❌ Erreur Service Worker:', error);
       });
   }
+  
+  // Initialiser la détection de scroll
+  initScrollBehavior();
 });
+
+// ============================
+// GESTION DU SCROLL (HIDE MENU & SHRINK HEADER)
+// ============================
+function initScrollBehavior() {
+  let lastScroll = 0;
+  const header = document.querySelector('.app-header');
+  const menu = document.querySelector('.app-menu');
+  const scrollThreshold = 100; // Pixels avant de déclencher
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    // Rétrécir le header après 50px de scroll
+    if (currentScroll > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    // Cacher/afficher le menu selon la direction du scroll
+    if (currentScroll > scrollThreshold) {
+      if (currentScroll > lastScroll) {
+        // Scroll vers le bas - cacher le menu
+        menu.classList.add('hidden');
+      } else {
+        // Scroll vers le haut - afficher le menu
+        menu.classList.remove('hidden');
+      }
+    } else {
+      // En haut de la page - toujours afficher le menu
+      menu.classList.remove('hidden');
+    }
+    
+    lastScroll = currentScroll;
+  });
+}

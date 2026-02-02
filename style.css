@@ -78,6 +78,24 @@ body::before {
   top: 0;
   z-index: 100;
   border-bottom: 2px solid var(--primary);
+  transition: all var(--transition-normal);
+}
+
+/* Header rétréci au scroll */
+.app-header.scrolled {
+  padding: 0.8rem 2rem;
+}
+
+.app-header.scrolled .app-title {
+  font-size: 1.3rem;
+}
+
+.app-header.scrolled .title-icon {
+  font-size: 1.5rem;
+}
+
+.app-header.scrolled .app-author {
+  font-size: 0.85rem;
 }
 
 .header-content {
@@ -134,6 +152,17 @@ body::before {
   z-index: 99;
   border-bottom: 1px solid rgba(99, 102, 241, 0.1);
   box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal), top var(--transition-normal);
+}
+
+/* Menu caché au scroll */
+.app-menu.hidden {
+  transform: translateY(-100%);
+}
+
+/* Ajuster la position du menu quand le header est rétréci */
+.app-header.scrolled ~ .app-menu {
+  top: 60px;
 }
 
 .menu-btn {
@@ -645,6 +674,29 @@ textarea::placeholder {
   .app-menu {
     gap: 0.3rem;
     top: 76px;
+    padding: 0.8rem;
+  }
+  
+  /* Ajuster pour header rétréci sur mobile */
+  .app-header.scrolled ~ .app-menu {
+    top: 50px;
+  }
+  
+  /* Header encore plus compact sur mobile */
+  .app-header.scrolled {
+    padding: 0.5rem 1rem;
+  }
+  
+  .app-header.scrolled .app-title {
+    font-size: 1.1rem;
+  }
+  
+  .app-header.scrolled .title-icon {
+    font-size: 1.3rem;
+  }
+  
+  .app-header.scrolled .app-author {
+    display: none; /* Cacher l'auteur sur mobile quand scrollé */
   }
   
   .menu-btn {
