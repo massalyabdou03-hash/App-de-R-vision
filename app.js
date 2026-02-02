@@ -1219,12 +1219,11 @@ window.addEventListener('DOMContentLoaded', () => {
   
   // Enregistrer le Service Worker pour PWA
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then((registration) => {
-        console.log('✅ Service Worker enregistré:', registration);
-      })
-      .catch((error) => {
-        console.log('❌ Erreur Service Worker:', error);
-      });
-  }
-});
+  navigator.serviceWorker.register('/App-de-R-vision/service-worker.js')
+    .then((registration) => {
+      console.log('✅ Service Worker enregistré:', registration);
+    })
+    .catch((error) => {
+      console.log('❌ Erreur Service Worker:', error);
+    });
+}
