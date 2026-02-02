@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Zaat Révision - App de révision Licence 1 Informatique Sénégal</title>
+  <meta name="description" content="Application de révision pour Licence 1 Informatique au Sénégal. Algorithmique, Programmation, Bases de données, MERISE, Architecture. Gratuit et hors ligne.">
+  <meta name="keywords" content="révision, informatique, licence 1, sénégal, algorithmique, programmation, MERISE, SQL, bases de données">
+  <meta name="author" content="Massaly">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zaat-revision.netlify.app/">
+  <meta property="og:title" content="Zaat Révision - App de révision Licence 1 Informatique">
+  <meta property="og:description" content="Application gratuite pour réviser ton programme de Licence 1 Informatique au Sénégal. Fonctionne hors ligne !">
+  <meta property="og:image" content="https://zaat-revision.netlify.app/icons/icon-512.png">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://zaat-revision.netlify.app/">
+  <meta property="twitter:title" content="Zaat Révision - App de révision Licence 1 Informatique">
+  <meta property="twitter:description" content="Application gratuite pour réviser ton programme de Licence 1 Informatique au Sénégal.">
+  <meta property="twitter:image" content="https://zaat-revision.netlify.app/icons/icon-512.png">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#6366f1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Zaat Révision">
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- HEADER DE L'APP -->
+  <header class="app-header">
+    <div class="header-content">
+      <h1 class="app-title">
+        <span class="title-icon">🎓</span>
+        <span>Zaat Révision</span>
+      </h1>
+      <span class="app-author">par Massaly</span>
+    </div>
+  </header>
+
+  <!-- MENU DE NAVIGATION -->
+  <nav class="app-menu">
+    <button class="menu-btn active" data-page="home" onclick="goHome()">
+      <span class="btn-icon">🏠</span>
+      <span>Accueil</span>
+    </button>
+    <button class="menu-btn" data-page="revision" onclick="goRevision()">
+      <span class="btn-icon">📚</span>
+      <span>Révision</span>
+    </button>
+    <button class="menu-btn" data-page="progress" onclick="goProgress()">
+      <span class="btn-icon">📊</span>
+      <span>Progression</span>
+    </button>
+    <button class="menu-btn" data-page="notes" onclick="goNotes()">
+      <span class="btn-icon">📝</span>
+      <span>Mes Notes</span>
+    </button>
+    <button class="menu-btn" data-page="about" onclick="goAbout()">
+      <span class="btn-icon">ℹ️</span>
+      <span>À propos</span>
+    </button>
+  </nav>
+
+  <!-- CONTENU PRINCIPAL DE L'APP -->
+  <main id="app" class="app-container">
+    <!-- Le contenu sera injecté ici par JavaScript -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <p>© 2026 Zaat Révision - Licence 1 Informatique Sénégal</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
