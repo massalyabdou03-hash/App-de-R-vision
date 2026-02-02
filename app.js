@@ -1228,19 +1228,26 @@ window.addEventListener('DOMContentLoaded', () => {
       });
   }
 });
+// ============================
+// SCROLL → MENU ONLY
+// ============================
 let lastScrollTop = 0;
-const header = document.querySelector('.app-header');
+const menu = document.querySelector('.app-menu');
 
-window.addEventListener('scroll', () => {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+if (menu) {
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  if (scrollTop > lastScrollTop && scrollTop > 80) {
-    // Scroll vers le bas → cacher
-    header.classList.add('hide');
-  } else {
-    // Scroll vers le haut → montrer
-    header.classList.remove('hide');
-  }
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+      // Scroll vers le bas → cacher le menu
+      menu.classList.add('hide');
+    } else {
+      // Scroll vers le haut → afficher le menu
+      menu.classList.remove('hide');
+    }
 
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  });
+}
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
