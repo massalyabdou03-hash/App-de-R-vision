@@ -725,3 +725,15 @@ textarea::placeholder {
   transform: translateY(-100%);
   opacity: 0;
 }
+/* ============================
+   MENU – SCROLL HIDE ONLY
+============================ */
+.app-menu {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+.app-menu.hide {
+  transform: translateY(-100%);
+  opacity: 0;
+}
