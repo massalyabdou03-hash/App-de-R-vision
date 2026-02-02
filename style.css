@@ -713,27 +713,3 @@ textarea::placeholder {
 
 .gap-1 { gap: 0.5rem; }
 .gap-2 { gap: 1rem; }
-/* ============================
-   HEADER – SCROLL HIDE EFFECT
-============================ */
-.app-header {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  will-change: transform, opacity;
-}
-
-.app-header.hide {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-/* ============================
-   MENU – SCROLL HIDE ONLY
-============================ */
-.app-menu {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  will-change: transform, opacity;
-}
-
-.app-menu.hide {
-  transform: translateY(-100%);
-  opacity: 0;
-}
